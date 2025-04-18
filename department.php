@@ -30,6 +30,7 @@
         
     </style>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="department.css">
 </head>
 <body>
     <header>
@@ -51,10 +52,10 @@
                         <a class="nav-link" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample" href="#courses">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="teacher.html" style="color: white;">Teachers</a>
+                        <a class="nav-link" href="teacher.html">Teachers</a>
                     </li>
                     <li class="nav-item dropdown" >
-                        <a class="nav-link dropdown-toggle" id="navbardropdown" data-bs-toggle="dropdown" href="#contact">Login</a>
+                        <a class="nav-link dropdown-toggle" id="navbardropdown" data-bs-toggle="dropdown" href="#contact" style="color: white;">Login</a>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li><a href="http://localhost/Php/Computer%20Science%20And%20Technology/department.php" class="dropdown-item">Department login</a></li>
                         </ul>
@@ -113,6 +114,61 @@
 
         </div>
       </div>
+        <div class="login-part mx-auto mt-5">
+            <h4 style="font-weight: bolder;" class="text-center">Department Login</h4>
+            <div class="form-part mt-2">
+                <form action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method="POST">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" class="form-control" placeholder="Username" required>
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
+                    <input type="submit" name="submit" value="Login" class="btn btn-success mx-auto d-block sub-button">
+                </form>
+                <div class="forgot-part">
+                    <p class="text-center">Forgot your password? Click here to <a href="http://localhost/Php/Computer%20Science%20And%20Technology/resetpass.php">reset password</a></p>
+                </div>
+            </div>
+        </div>
+
+        <?php
+include 'server.php';
+
+if(isset($_POST['submit'])){
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    $select = "SELECT * FROM login WHERE username='$username'";
+    $select_q = mysqli_query($con, $select);
+
+    if(mysqli_num_rows($select_q) > 0){
+        $pass = mysqli_fetch_assoc($select_q);
+        $db_pass = $pass['password'];
+
+        if(password_verify($password, $db_pass)){
+            ?>
+            <script>
+    location.replace("http://localhost/Php/Computer%20Science%20And%20Technology/departmentlog.php");
+</script>
+
+            <?php
+        } else {
+            ?>
+            <script>
+                alert("Wrong password");
+            </script>
+            <?php 
+        }
+    } else {
+        ?>
+        <script>
+            alert("Username not found");
+        </script>
+        <?php
+    }
+}
+?>
+
+
 
       <footer>
         <p>&copy; 2025 Computer Science and Technology Department</p>
