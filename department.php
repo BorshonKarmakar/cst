@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -116,6 +119,13 @@
       </div>
         <div class="login-part mx-auto mt-5">
             <h4 style="font-weight: bolder;" class="text-center">Department Login</h4>
+            <p class="text-center bg-info text-white">
+                <?php
+                    if(isset($_SESSION['updatemsg'])){
+                        echo $_SESSION['updatemsg'];
+                    }
+                ?>
+            </p>
             <div class="form-part mt-2">
                 <form action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method="POST">
                     <label for="username">Username</label>
